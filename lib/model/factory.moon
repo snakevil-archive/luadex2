@@ -1,11 +1,11 @@
 require 'lfs'
-ModelSeriesSet = require 'model/seriesset'
+ModelNode = require 'model/node'
+ModelMovie = require 'model/movie'
+ModelMovieSet = require 'model/movieset'
+ModelActor = require 'model/actor'
 ModelSeries = require 'model/series'
 ModelActorSet = require 'model/actorset'
-ModelActor = require 'model/actor'
-ModelMovieSet = require 'model/movieset'
-ModelMovie = require 'model/movie'
-ModelNode = require 'model/node'
+ModelSeriesSet = require 'model/seriesset'
 
 --- 节点工厂组件
 -- @module model/factory
@@ -69,11 +69,15 @@ class ModelFactory
     --- 识别 URI 生成节点实例
     -- @function load
     -- @string uri
+    -- @param[opt] class prototype
     -- @return ModelNode
     -- @usage node = factory:load'/g/'
-    load: ( uri ) =>
+    load: ( uri, prototype ) =>
         return nodes[uri] if nodes[uri]
         path = parse uri
+        if prototype
+            nodes[uri] = prototype self, path, uri
+            return nodes[uri]
         for type in *types
             if type.test path
                 nodes[uri] = type self, path, uri

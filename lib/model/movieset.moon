@@ -47,5 +47,5 @@ class ModelMovieSet extends ModelNode
             for name in lfs.dir @path
                 path = @path .. name
                 continue if '.' == name or '..' == name or 'directory' != lfs.attributes path, 'mode'
-                table.insert @_children, @factory\load @uri .. name if is_movie path
+                table.insert @_children, @factory\load @uri .. name, ModelMovie if is_movie path
         @_children
