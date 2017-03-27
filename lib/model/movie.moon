@@ -24,13 +24,10 @@ class ModelMovie extends ModelNode
         super factory, path, uri
         @name = @meta.title or @name
         @meta.summary = @meta.summary\gsub '%s+', '' if @meta.summary
-        {
-            year,
-            month,
-            day
-        } = for section in @meta.date\gmatch '%d+'
+        date = for section in @meta.date\gmatch '%d+'
             section
-        @_time = os.time :year, :month, :day
+        with date
+            @_time = os.time .year, .month, .day
 
     --- 检查路径是否符合节点特征
     -- @function test
