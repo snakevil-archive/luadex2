@@ -14,7 +14,7 @@ luadex = ( request ) ->
     { :path, :uri, :lap } = request
 
     path ..= '/' if '/' != path\sub(-1)
-    uri = uri\gsub '%%(%x%x)', (hex) =>
+    uri = uri\gsub '%%(%x%x)', (hex) ->
         string.char tonumber hex, 16
     uri ..= '/' if '/' != uri\sub(-1)
 
