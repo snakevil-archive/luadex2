@@ -33,8 +33,8 @@ class ModelNode
     -- @string path
     -- @string uri
     new: ( factory, path, uri ) =>
-        path ..= '/' if '/' != path[-1]
-        uri ..= '/' if '/' != uri[-1]
+        path ..= '/' if '/' != path\sub -1
+        uri ..= '/' if '/' != uri\sub -1
         @factory = factory
         @path = path
         @uri = uri
@@ -66,7 +66,9 @@ class ModelNode
     -- @usage parent = node:parent()
     parent: () =>
         root = @root!
-        return @factory\load @uri\gsub '^(.*/)[^/]+/$', '%1' if not root.uri == @uri
+        if root.uri != @uri
+            uri = @uri\gsub '^(.*/)[^/]+/$', '%1'
+            @factory\load uri
 
     --- 最近的演员索引节点实例
     _actorset: nil

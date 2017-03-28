@@ -63,7 +63,7 @@ class ModelFactory
     -- @raise out of range.
     -- @raise oops for file
     load: ( uri, prototype ) =>
-        uri ..= '/' if '/' != uri[-1]
+        uri ..= '/' if '/' != uri\sub -1
         return nodes[uri] if nodes[uri]
         error 'out of range.' if prefix != uri\sub 1, #prefix
         path = root .. uri\sub 1 + #prefix

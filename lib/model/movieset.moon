@@ -15,7 +15,7 @@ class ModelMovieSet extends ModelNode
     -- @return bool
     -- @usage bingo = ModelMovieSet.test'/mnt/video/g/2016/'
     test: ( path ) ->
-        path ..= '/' if '/' != path[-1]
+        path ..= '/' if '/' != path\sub -1
         for file in lfs.dir path
             dir = path .. file
             continue if '.' == file or '..' == file or 'directory' != lfs.attributes dir, 'mode'
