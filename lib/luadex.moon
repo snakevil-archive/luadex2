@@ -8,10 +8,10 @@ ViewFactory = require 'view/factory'
 -- @copyright 2017 SZen.in
 -- @license GPL-3.0+
 -- @function luadex
--- @param {path=string, uri=string, lap=number} request
+-- @param {path=string, uri=string} request
 -- @return string
 luadex = ( request ) ->
-    { :path, :uri, :lap } = request
+    { :path, :uri } = request
 
     path ..= '/' if '/' != path\sub(-1)
     uri = uri\gsub '%%(%x%x)', (hex) ->
@@ -19,6 +19,7 @@ luadex = ( request ) ->
     uri ..= '/' if '/' != uri\sub(-1)
 
     node_factory = ModelFactory path, uri
-    tostring ViewFactory!\analyse node_factory\load uri
+    page = ViewFactory!\analyse node_factory\load uri
+    page\render!\gsub('>%s+', '>')\gsub '%s+<', '<'
 
 luadex
