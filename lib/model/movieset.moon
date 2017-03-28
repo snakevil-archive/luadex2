@@ -9,31 +9,17 @@ ModelMovie = require 'model/movie'
 -- @license GPL-3.0+
 -- @class ModelMovieSet
 class ModelMovieSet extends ModelNode
-    --- 判断路径是否为影片节点
-    -- @function is_movie
-    -- @string path
-    -- @return bool
-    -- @usage bingo = is_movie'/mnt/video/g/2016/'
-    is_movie = ( path ) ->
-        files = {
-            'cover.jpg',
-            'movie.mp4',
-            'metag.yml'
-        }
-        for file in *files
-            return false if 'file' != lfs.attributes path .. file, 'mode'
-        true
-
     --- 检查路径是否符合节点特征
     -- @function test
     -- @string path
     -- @return bool
     -- @usage bingo = ModelMovieSet.test'/mnt/video/g/2016/'
     test: ( path ) ->
+        path ..= '/' if '/' != path[-1]
         for file in lfs.dir path
             dir = path .. file
             continue if '.' == file or '..' == file or 'directory' != lfs.attributes dir, 'mode'
-            return true if is_movie dir
+            return true if ModelMovie.test dir
         false
 
     --- 获取子节点实例表
@@ -47,5 +33,6 @@ class ModelMovieSet extends ModelNode
             for name in lfs.dir @path
                 path = @path .. name
                 continue if '.' == name or '..' == name or 'directory' != lfs.attributes path, 'mode'
-                table.insert @_children, @factory\load @uri .. name, ModelMovie if is_movie path
+                child = @factory\load @uri .. name, ModelMovie
+                table.insert @_children, child if child
         @_children

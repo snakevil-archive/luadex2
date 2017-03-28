@@ -33,6 +33,8 @@ class ModelNode
     -- @string path
     -- @string uri
     new: ( factory, path, uri ) =>
+        path ..= '/' if '/' != path[-1]
+        uri ..= '/' if '/' != uri[-1]
         @factory = factory
         @path = path
         @uri = uri

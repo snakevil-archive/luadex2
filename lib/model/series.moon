@@ -13,4 +13,4 @@ class ModelSeries extends ModelMovieSet
     -- @return bool
     -- @usage bingo = ModelSeries.test'/mnt/video/g/2016/'
     test: ( path ) ->
-        '-' == path\gsub '^.*/%-/[^/]+/$', '-'
+        '-' == path\gsub '^.*/%-/[^/]+/?$', '-'

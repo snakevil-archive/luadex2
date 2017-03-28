@@ -35,6 +35,7 @@ class ModelMovie extends ModelNode
     -- @return bool
     -- @usage bingo = ModelMovie.test'/mnt/video/g/2016/'
     test: ( path ) ->
+        path ..= '/' if '/' != path[-1]
         files = {
             'cover.jpg',
             'movie.mp4',

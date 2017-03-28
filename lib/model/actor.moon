@@ -33,6 +33,7 @@ class ModelActor extends ModelMovieSet
     -- @return bool
     -- @usage bingo = ModelActor.test'/mnt/video/g/2016/'
     test: ( path ) ->
+        path ..= '/' if '/' != path[-1]
         files = {
             'portrait.jpg',
             'metag.yml'

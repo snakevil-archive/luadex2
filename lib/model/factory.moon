@@ -35,20 +35,8 @@ class ModelFactory
             table.remove uris
         root = '/' .. table.concat(paths, '/') .. '/'
         prefix = '/' .. table.concat(uris, '/') .. '/'
+        root = '/' if '//' == root
         prefix = '/' if '//' == prefix
-
-    --- 获取 URI 对应路径
-    -- @function parse
-    -- @string uri
-    -- @return string
-    -- @usage path = parse'/g/'
-    -- @raise out of range.
-    -- @raise oops for file
-    parse = ( uri ) ->
-        error 'out of range.' if prefix != uri\sub 1, #prefix
-        path = root .. uri\sub 1 + #prefix
-        error 'oops for file.' if 'directory' != lfs.attributes path, 'mode'
-        path
 
     --- 节点实例表
     -- @field
@@ -72,13 +60,19 @@ class ModelFactory
     -- @param[opt] class prototype
     -- @return ModelNode
     -- @usage node = factory:load'/g/'
+    -- @raise out of range.
+    -- @raise oops for file
     load: ( uri, prototype ) =>
+        uri ..= '/' if '/' != uri[-1]
         return nodes[uri] if nodes[uri]
-        path = parse uri
-        if prototype
-            nodes[uri] = prototype self, path, uri
-            return nodes[uri]
-        for type in *types
+        error 'out of range.' if prefix != uri\sub 1, #prefix
+        path = root .. uri\sub 1 + #prefix
+        error 'oops for file.' if 'directory' != lfs.attributes path, 'mode'
+        protoypes = if prototype
+            { prototype }
+        else
+            types
+        for type in *protoypes
             if type.test path
                 nodes[uri] = type self, path, uri
                 return nodes[uri]
@@ -98,12 +92,12 @@ class ModelFactory
     -- @usage uri = find_set('/g/2016/detective.conan.the.darkest.nightmare/', '-')
     find_set: ( uri, type = '@' ) ->
         paths = {
-            root .. type .. '/'
+            root .. type
         }
         suffix = ''
         for section in uri\sub(1 + #prefix)\gmatch '[^/]+'
             suffix ..= section .. '/'
-            table.insert paths, 1, root .. suffix .. type .. '/'
+            table.insert paths, 1, root .. suffix .. type
         table.remove paths, 1
         for path in *paths
             return prefix .. path\sub(1 + #root) if 'directory' == lfs.attributes path, 'mode'
