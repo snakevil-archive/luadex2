@@ -24,8 +24,7 @@ class ModelActor extends ModelMovieSet
         @name = @meta.aliases[1] if @meta.aliases
         date = for section in @meta.birthday\gmatch '%d+'
             section
-        with date
-            @_time = os.time .year, .month, .day
+        @_time = os.time year: date[1], month: date[2], day: date[3]
 
     --- 检查路径是否符合节点特征
     -- @function test

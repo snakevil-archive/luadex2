@@ -26,8 +26,7 @@ class ModelMovie extends ModelNode
         @meta.summary = @meta.summary\gsub '%s+', '' if @meta.summary
         date = for section in @meta.date\gmatch '%d+'
             section
-        with date
-            @_time = os.time .year, .month, .day
+        @_time = os.time year: date[1], month: date[2], day: date[3]
 
     --- 检查路径是否符合节点特征
     -- @function test
