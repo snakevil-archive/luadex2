@@ -24,8 +24,7 @@ class ModelMovie extends ModelNode
         super factory, path, uri
         @name = @meta.title or @name
         @meta.summary = @meta.summary\gsub '%s+', '' if @meta.summary
-        date = for section in @meta.date\gmatch '%d+'
-            section
+        date = [ section for section in @meta.date\gmatch '%d+' ]
         @_time = os.time year: date[1], month: date[2], day: date[3]
 
     --- 检查路径是否符合节点特征
@@ -50,8 +49,7 @@ class ModelMovie extends ModelNode
     -- @usage files = movie:assets()
     assets: () =>
         @children! if not @_assets
-        @_assets = for file in *@_assets
-            file if file\match '^snap%-%d+%.jpg$'
+        @_assets = [ file for file in *@_assets when file\match '^snap%-%d+%.jpg$' ]
         @_assets
 
     --- 格式化发行时间

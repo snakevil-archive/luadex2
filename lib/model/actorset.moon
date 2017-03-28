@@ -39,3 +39,12 @@ class ModelActorSet extends ModelNode
                 child = @factory\load @uri .. name, ModelActor
                 table.insert @_children, child if child
         @_children
+
+    --- 获取指定名称的演员子节点
+    -- @function child
+    -- @string name
+    -- @return ModelActor
+    -- @usage actor = actorset:child'Cloy'
+    child: ( name ) =>
+        for actor in *@children!
+            return actor if actor.name == name

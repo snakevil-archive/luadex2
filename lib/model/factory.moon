@@ -90,7 +90,7 @@ class ModelFactory
     -- @string[opt="@"] type
     -- @return string
     -- @usage uri = find_set('/g/2016/detective.conan.the.darkest.nightmare/', '-')
-    find_set: ( uri, type = '@' ) ->
+    find_set = ( uri, type = '@' ) ->
         paths = {
             root .. type
         }

@@ -22,9 +22,10 @@ class ModelActor extends ModelMovieSet
     new: ( factory, path, uri ) =>
         super factory, path, uri
         @name = @meta.aliases[1] if @meta.aliases
-        date = for section in @meta.birthday\gmatch '%d+'
-            section
-        @_time = os.time year: date[1], month: date[2], day: date[3]
+        if @meta.birthday
+            date = for section in @meta.birthday\gmatch '%d+'
+                section
+            @_time = os.time year: date[1], month: date[2], day: date[3]
 
     --- 检查路径是否符合节点特征
     -- @function test
@@ -47,4 +48,4 @@ class ModelActor extends ModelMovieSet
     -- @return string
     -- @usage year = movie:date'%Y'
     date: ( format = '%c' ) =>
-        os.date format, @_time
+        os.date format, @_time if @_time
