@@ -12,10 +12,6 @@ ModelNode = require 'model/node'
 -- @license GPL-3.0+
 -- @class ModelMovie
 class ModelMovie extends ModelNode
-    --- 发行时间
-    -- @field
-    _time: 0
-
     --- 构造函数
     -- @param ModelFactory factory
     -- @string path
@@ -25,7 +21,7 @@ class ModelMovie extends ModelNode
         @name = @meta.title or @name
         @meta.summary = @meta.summary\gsub '%s+', '' if @meta.summary
         date = [ section for section in @meta.date\gmatch '%d+' ]
-        @_time = os.time year: date[1], month: date[2], day: date[3]
+        @meta.date = os.time year: date[1], month: date[2], day: date[3]
 
     --- 检查路径是否符合节点特征
     -- @function test
@@ -47,15 +43,7 @@ class ModelMovie extends ModelNode
     -- @function assets
     -- @return {string,...}
     -- @usage files = movie:assets()
-    assets: () =>
+    assets: =>
         @children! if not @_assets
         @_assets = [ file for file in *@_assets when file\match '^snap%-%d+%.jpg$' ]
         @_assets
-
-    --- 格式化发行时间
-    -- @function date
-    -- @string[opt="%c"] format
-    -- @return string
-    -- @usage year = movie:date'%Y'
-    date: ( format = '%c' ) =>
-        os.date format, @_time

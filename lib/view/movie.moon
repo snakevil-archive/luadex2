@@ -16,7 +16,7 @@ class ViewMovie extends ViewNode
     -- @function css
     -- @return string
     -- @usage html = view:css()
-    css: () =>
+    css: =>
         [=[
 <link href="//cdn.bootcss.com/video.js/5.19.0/video-js.min.css" rel="stylesheet">
 <link href="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.css" rel="stylesheet">
@@ -26,7 +26,7 @@ class ViewMovie extends ViewNode
     -- @function js
     -- @return string
     -- @usage html = view:js()
-    js: () =>
+    js: =>
         [=[
 <script src="//cdn.bootcss.com/video.js/5.19.0/video.min.js"></script>
 <script src="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.js"></script>
@@ -36,7 +36,7 @@ class ViewMovie extends ViewNode
     -- @function head
     -- @return string
     -- @usage html = view:head()
-    head: () =>
+    head: =>
         cosmo.fill [=[
 <div class="row">
   <div class="col-xs-12 col-md-8 col-md-offset-2">
@@ -64,7 +64,7 @@ class ViewMovie extends ViewNode
     -- @function body
     -- @return string
     -- @usage html = view:body()
-    body: () =>
+    body: =>
         cosmo.fill [=[
 <div class="panel panel-warning">
   $if{ $node|meta|actors }[[
@@ -74,9 +74,9 @@ class ViewMovie extends ViewNode
           <li>
             $if{ $actorset }[[
               <a href="$actorset|uri$name/">
-                $name
-                $if{ 0 < $age }[[
-                  ($age)
+                <span>$name</span>
+                $if{ $age }[[
+                  <span class="small">$age</span>
                 ]]
               </a>
             ]][[
@@ -139,25 +139,26 @@ $if{ 0 < #$snaps }[[
             if: cosmo.cif
             node: @node
             actorset: @node\actorset!
-            yield_actors: () ->
+            yield_actors: ->
                 actors = @node\actorset!
-                year = @node\date '%Y'
                 for name in *@node.meta.actors
                     age = if actors
                         actor = actors\child name
-                        if actor and actor\date '%Y'
-                            year - actor\date '%Y'
-                        else
-                            0
-                    else
-                        0
-                    cosmo.yield :name, :age
+                        if actor
+                            age = actor\age @node.meta.date
+                            if age
+                                "/#{age}y"
+                    cosmo.yield
+                      :name
+                      :age
             seriesset: @node\seriesset!
-            yield_meta: () ->
+            yield_meta: ->
                 for tag, value in pairs @node.meta
                     if 'actors' != tag and 'series' != tag and 'links' != tag
-                        cosmo.yield :tag, :value
-            yield_links: () ->
+                        cosmo.yield
+                            tag: tag\sub(1, 1)\upper! .. tag\sub(2)
+                            :value
+            yield_links: ->
                 for title, url in pairs @node.meta.links
                     cosmo.yield :title, :url
             snaps: do
