@@ -81,7 +81,7 @@ class ModelFactory
     -- @function root
     -- @return ModelNode
     -- @usage root = factory:root()
-    root: () =>
+    root: =>
         @load prefix
 
     --- 搜索最近的包含指定名称文件夹的上级 URI

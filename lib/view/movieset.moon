@@ -8,15 +8,11 @@ ViewNode = require 'view/node'
 -- @license GPL-3.0+
 -- @class ViewMovieSet
 class ViewMovieSet extends ViewNode
-    --- 是否使用瀑布流式列表布局
-    -- @field
-    masonry: false
-
     --- 定制 CSS 块代码
     -- @function css
     -- @return string
     -- @usage html = view:css()
-    css: () =>
+    css: =>
         [=[
 <style>
 .thumbnail {
@@ -34,7 +30,7 @@ class ViewMovieSet extends ViewNode
     -- @function body
     -- @return string
     -- @usage html = view:body()
-    body: () =>
+    body: =>
         cosmo.fill [=[
 $if{ 0 < #$movies }[[
   <div class="row">

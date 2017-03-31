@@ -24,35 +24,35 @@ class ViewNode
     -- @function title
     -- @return string
     -- @usage title = view:title()
-    title: () =>
+    title: =>
         @node.name
 
     --- 定制 CSS 块代码
     -- @function css
     -- @return string
     -- @usage html = view:css()
-    css: () =>
+    css: =>
         ''
 
     --- 定制 JS 块代码
     -- @function js
     -- @return string
     -- @usage html = view:js()
-    js: () =>
+    js: =>
         ''
 
     --- 定制页面头部块代码
     -- @function head
     -- @return string
     -- @usage html = view:head()
-    head: () =>
+    head: =>
         "<h1>#{@node.name}</h1>"
 
     --- 定制页面内容块代码
     -- @function body
     -- @return string
     -- @usage html = view:body()
-    body: () =>
+    body: =>
         cosmo.fill [=[
 <div class="panel panel-info">
   <div class="panel-body">
@@ -94,7 +94,7 @@ class ViewNode
     -- @function render
     -- @return string
     -- @usage html = view:render()
-    render: () =>
+    render: =>
         cosmo.fill [=[
 <!doctype html>
 <html class="no-js" lang="en">

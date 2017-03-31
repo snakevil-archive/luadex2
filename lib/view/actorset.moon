@@ -25,12 +25,14 @@ $cond_actors[[
   <div class="row masonry">
     $yield_actors[[
       <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 item">
-        <a class="thumbnail" href="$actor|uri">
-          <img src="$actor|uri./portrait.jpg">
+        <a class="thumbnail" href="$uri">
+          <img src="$uri./portrait.jpg">
           <div class="caption">
             <h2 class="h4">
-              <span>$actor|name</span>
-              <span class="small">$age</span>
+              <span>$name</span>
+              $if{ $age }[[
+                <span class="small">$age</span>
+              ]]
             </h2>
           </div>
         </a>
@@ -39,6 +41,7 @@ $cond_actors[[
   </div>
 ]]
 ]=]
+            if: cosmo.cif
             cond_actors: do
                 actors = @node\children!
                 cosmo.cond 0 < #actors,
@@ -49,6 +52,7 @@ $cond_actors[[
                             names[actor.name] = true
                             age = actor\age!
                             cosmo.yield
-                                :actor
+                                name: actor.name
+                                uri: actor.uri
                                 age: if age
-                                    age .. 'y'
+                                    "/#{age}y"

@@ -26,7 +26,7 @@ class ModelMovieSet extends ModelNode
     -- @function children
     -- @return {ModelMovie,...}
     -- @usage movies = movieset:children()
-    children: () =>
+    children: =>
         if not @_children
             @_children = {}
             @_assets = {}

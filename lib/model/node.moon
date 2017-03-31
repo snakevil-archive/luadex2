@@ -57,14 +57,14 @@ class ModelNode
     -- @function root
     -- @return ModelNode
     -- @usage root = node:root()
-    root: () =>
+    root: =>
         @factory\root!
 
     --- 获取父节点实例
     -- @function parent
     -- @return ModelNode
     -- @usage parent = node:parent()
-    parent: () =>
+    parent: =>
         root = @root!
         if root.uri != @uri
             uri = @uri\gsub '^(.*/)[^/]+/$', '%1'
@@ -77,7 +77,7 @@ class ModelNode
     -- @function actorset
     -- @return ModelActorSet
     -- @usage actorset = node:actorset()
-    actorset: () =>
+    actorset: =>
         @_actorset = @factory\actorset(@) or '' if not @_actorset
         return @_actorset if '' != @_actorset
 
@@ -88,7 +88,7 @@ class ModelNode
     -- @function seriesset
     -- @return ModelSeriesSet
     -- @usage seriesset = node:seriesset()
-    seriesset: () =>
+    seriesset: =>
         @_seriesset = @factory\seriesset(@) or '' if not @_seriesset
         return @_seriesset if '' != @_seriesset
 
@@ -102,7 +102,7 @@ class ModelNode
     -- @function children
     -- @return {ModelNode,...}
     -- @usage nodes = node:children()
-    children: () =>
+    children: =>
         if not @_children
             @_children = {}
             @_assets = {}
@@ -120,6 +120,6 @@ class ModelNode
     -- @function assets
     -- @return {string,...}
     -- @usage files = node:assets()
-    assets: () =>
+    assets: =>
         @children! if not @_assets
         @_assets

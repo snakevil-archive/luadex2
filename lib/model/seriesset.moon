@@ -29,7 +29,7 @@ class ModelSeriesSet extends ModelNode
     -- @function children
     -- @return {ModelActor,...}
     -- @usage actors = seriesset:children()
-    children: () =>
+    children: =>
         if not @_children
             @_children = {}
             @_assets = {}
