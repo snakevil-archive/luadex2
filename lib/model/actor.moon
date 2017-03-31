@@ -13,7 +13,7 @@ ModelMovieSet = require 'model/movieset'
 class ModelActor extends ModelMovieSet
     --- 生日时间
     -- @field
-    _time: 0
+    _time: nil
 
     --- 构造函数
     -- @param ModelFactory factory
@@ -42,10 +42,13 @@ class ModelActor extends ModelMovieSet
             return false if 'file' != lfs.attributes path .. file, 'mode'
         true
 
-    --- 格式化生日时间
-    -- @function date
-    -- @string[opt="%c"] format
-    -- @return string
-    -- @usage year = movie:date'%Y'
-    date: ( format = '%c' ) =>
-        os.date format, @_time if @_time
+    --- 获取在指定时刻的年纪
+    -- @function age
+    -- @int[opt=nil] time
+    -- @return int
+    -- @usage age = actor:age
+    age: ( time ) =>
+        return if not @_time
+        time = time or os.time()
+        year = os.date '%Y', time
+        year - os.date '%Y', @_time

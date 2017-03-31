@@ -29,7 +29,7 @@ class ModelActorSet extends ModelNode
     -- @function children
     -- @return {ModelActor,...}
     -- @usage actors = actorset:children()
-    children: () =>
+    children: =>
         if not @_children
             @_children = {}
             @_assets = {}
