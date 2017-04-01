@@ -33,14 +33,22 @@ class ViewActor extends ViewMovieSet
       </div>
       <div class="media-body">
         <h1 class="media-heading">$name</h1>
-        <p>$node|meta|romaji</p>
+        <p>
+          $node|meta|romaji
+          $if{ $age }[[
+            <br>$age
+          ]]
+        </p>
       </div>
     </div>
   </div>
 </div>
 ]=]
+            if: cosmo.cif
             :name
             node: @node
+            age: if @node.meta.birthday
+                @node\age! .. 'y'
 
     --- 定制页面内容块代码
     -- @function body
@@ -49,39 +57,41 @@ class ViewActor extends ViewMovieSet
     body: =>
         cosmo.fill [=[
 <div class="panel panel-warning">
-  <div class="panel-heading">&nbsp;</div>
+  <div class="panel-heading">
+    $if{ $node|meta|aliases }[[
+      <ul class="list-inline">
+        $node|meta|aliases[[
+          <li>$it</li>
+        ]]
+      </ul>
+    ]][[
+      &nbsp;
+    ]]
+  </div>
   <div class="panel-body">
     <dl class="dl-horizontal">
-      $if{ $node|meta|aliases }[[
-        <dt>Aliases</dt>
-        <dd>
-          <ul class="list-unstyled">
-            $node|meta|aliases[[
-              <li>$it</li>
-            ]]
-          </ul>
-        </dd>
-      ]]
       $if{ $node|meta|size }[[
         <dt>Size</dt>
         <dd>
           <ul class="list-unstyled">
             <li>
-              <strong>Bust&nbsp;</strong>
-              <span>$node|meta|size|B cm</span>
+              <abbr title="Bust">B</abbr>
+              &nbsp;$node|meta|size|B cm
             </li>
             <li>
-              <strong>Waist&nbsp;</strong>
-              <span>$node|meta|size|W cm</span>
+              <abbr title="Waist">W</abbr>
+              &nbsp;$node|meta|size|W cm
             </li>
             </li>
-              <strong>Hip&nbsp;</strong>
-              <span>$node|meta|size|H cm</span>
+              <abbr title="Hip">H</abbr>
+              &nbsp;$node|meta|size|H cm
             </li>
           </ul>
         </dd>
         <dt>Tall</dt>
-        <dd>$node|meta|size|T cm</dd>
+        <dd>
+          <p>$node|meta|size|T cm</p>
+        </dd>
       ]]
       $yield_meta[[
         <dt>$tag</dt>
@@ -110,11 +120,12 @@ $list
             node: @node
             yield_meta: ->
                 for tag, value in pairs @node.meta
-                    if 'romaji' != tag and 'aliases' != tag and 'size' != tag and 'links' != tag
-                        cosmo.yield
-                            tag: tag\sub(1, 1)\upper! .. tag\sub(2)
-                            :value
+                    continue if 'romaji' == tag or 'aliases' == tag or 'size' == tag or 'links' == tag
+                    value = os.date '%F', value if 'birthday' == tag
+                    cosmo.yield
+                        tag: tag\sub(1, 1)\upper! .. tag\sub(2)
+                        :value
             yield_links: ->
                 for title, url in pairs @node.meta.links
                     cosmo.yield :title, :url
-            list: super!
+            list: super @node.meta.birthday

@@ -32,13 +32,19 @@ class ViewMovieSet extends ViewNode
 
     --- 定制页面内容块代码
     -- @function body
+    -- @int[opt] birthday
     -- @return string
     -- @usage html = view:body()
-    body: =>
+    body: (birthday) =>
         cosmo.fill [=[
 $cond_movies[[
   $yield_years[[
-    <h2>$year</h2>
+    <h2>
+      $year
+      $if{ $age }[[
+        <span class="small">$age</span>
+      ]]
+    </h2>
     <div class="row masonry">
       $movies[[
         <div class="col-xs-6 col-sm-4 col-lg-3 item">
@@ -51,12 +57,15 @@ $cond_movies[[
   ]]
 ]]
 ]=],
+            if: cosmo.cif
             cond_movies: do
                 movies = @node\children!
                 cosmo.cond 0 < #movies,
                     yield_years: ->
                         years = {}
                         ymovies = {}
+                        born = if birthday
+                            os.date '%Y', birthday
                         for movie in *movies
                             year = os.date '%Y', movie.meta.date
                             if not ymovies[year]
@@ -68,4 +77,6 @@ $cond_movies[[
                         for year in *years
                             cosmo.yield
                                 :year
+                                age: if born
+                                    '/' .. (year - born) .. 'y'
                                 movies: ymovies[year]

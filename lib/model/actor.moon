@@ -11,10 +11,6 @@ ModelMovieSet = require 'model/movieset'
 -- @license GPL-3.0+
 -- @class ModelActor
 class ModelActor extends ModelMovieSet
-    --- 生日时间
-    -- @field
-    _time: nil
-
     --- 构造函数
     -- @param ModelFactory factory
     -- @string path
@@ -25,7 +21,7 @@ class ModelActor extends ModelMovieSet
         if @meta.birthday
             date = for section in @meta.birthday\gmatch '%d+'
                 section
-            @_time = os.time year: date[1], month: date[2], day: date[3]
+            @meta.birthday = os.time year: date[1], month: date[2], day: date[3]
 
     --- 检查路径是否符合节点特征
     -- @function test
@@ -48,7 +44,7 @@ class ModelActor extends ModelMovieSet
     -- @return int
     -- @usage age = actor:age
     age: ( time ) =>
-        return if not @_time
+        return if not @meta.birthday
         time = time or os.time()
         year = os.date '%Y', time
-        year - os.date '%Y', @_time
+        year - os.date '%Y', @meta.birthday
