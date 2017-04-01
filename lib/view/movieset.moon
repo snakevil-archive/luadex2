@@ -8,6 +8,10 @@ ViewNode = require 'view/node'
 -- @license GPL-3.0+
 -- @class ViewMovieSet
 class ViewMovieSet extends ViewNode
+    --- 是否使用瀑布流式列表布局
+    -- @field
+    masonry: true
+
     --- 定制 CSS 块代码
     -- @function css
     -- @return string
@@ -32,17 +36,36 @@ class ViewMovieSet extends ViewNode
     -- @usage html = view:body()
     body: =>
         cosmo.fill [=[
-$if{ 0 < #$movies }[[
-  <div class="row">
-    $movies[[
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-        <a class="thumbnail" href="$uri" style="background-image:url($uri./cover.jpg)">
-          <img src="$uri./cover.jpg">
-        </a>
-      </div>
-    ]]
-  </div>
+$cond_movies[[
+  $yield_years[[
+    <h2>$year</h2>
+    <div class="row masonry">
+      $movies[[
+        <div class="col-xs-6 col-sm-4 col-lg-3 item">
+          <a class="thumbnail" href="$uri" style="background-image:url($uri./cover.jpg)">
+            <img src="$uri./cover.jpg">
+          </a>
+        </div>
+      ]]
+    </div>
+  ]]
 ]]
 ]=],
-            if: cosmo.cif
-            movies: @node\children!
+            cond_movies: do
+                movies = @node\children!
+                cosmo.cond 0 < #movies,
+                    yield_years: ->
+                        years = {}
+                        ymovies = {}
+                        for movie in *movies
+                            year = os.date '%Y', movie.meta.date
+                            if not ymovies[year]
+                                table.insert years, year
+                                ymovies[year] = {}
+                            table.insert ymovies[year], movie
+                        table.sort years, (one, another) ->
+                            one > another
+                        for year in *years
+                            cosmo.yield
+                                :year
+                                movies: ymovies[year]
