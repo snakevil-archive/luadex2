@@ -102,7 +102,7 @@ class ViewNode
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>$title - Luadex</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
   <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   $css
 </head>
@@ -125,36 +125,39 @@ class ViewNode
       <div class="row">
         <div class="col-xs-12 col-sm-8 col-sm-offset-4">
           <address>
+            <em class="small">PROFILER: %PROFILER%</em>
+          </address>
+          <address>
             <strong>
               <a href="https://github.com/snakevil/luadex" target="_blank">Luadex</a>
-              <span>, A piece of expirement work of&nbsp;</span>
+              , A piece of expirement work of&nbsp;
               <a href="https://twitter.com/snakevil" target="_blank">@Snakevil</a>
             </strong>
             <br>
-            <span>Based on&nbsp;</span>
+            Based on&nbsp;
             <a href="https://github.com/openresty/lua-nginx-module/" target="_blank">ngx_lua</a>
-            <span>,&nbsp;</span>
+            ,&nbsp;
             <a href="http://keplerproject.github.io/luafilesystem/" target="_blank">LuaFileSystem</a>
-            <span>,&nbsp;</span>
+            ,&nbsp;
             <a href="https://github.com/gvvaughan/lyaml" target="_blank">LYAML</a>
-            <span>&nbsp;and&nbsp;<span>
+            &nbsp;and&nbsp;
             <a href="http://cosmo.luaforge.net" target="_blank">Cosmo</a>
             <br>
-            <span>Rendered with&nbsp;<span>
+            Rendered with&nbsp;
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>
-            <span>,&nbsp;</span>
+            ,&nbsp;
             <a href="http://jquery.com" target="_blank">jQuery</a>
-            <span>,&nbsp;</span>
+            ,&nbsp;
             <a href="http://videojs.com" target="_blank">Video.js</a>
-            <span>,&nbsp;</span>
+            ,&nbsp;
             <a href="http://masonry.desandro.com" target="_blank">Masonry</a>
-            <span>&nbsp;and&nbsp;<span>
+            &nbsp;and&nbsp;
             <a href="http://fancyapps.com/fancybox/3/" target="_blank">fancyBox</a>
             <br>
             <em>
-              <span>Thanks to&nbsp;</span>
+              Thanks to&nbsp;
               <a href="http://www.bootcdn.cn" target="_blank">BootCDN</a>
-              <span>&nbsp;for their free service :-)</span>
+              &nbsp;for their free service :-)
             </em>
           </address>
         </div>

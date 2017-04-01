@@ -42,6 +42,9 @@ class ModelFactory
     -- @field
     nodes = {}
 
+    --- 节点实例计数
+    counter = 0
+
     --- 节点类型表
     -- @field
     types = {
@@ -74,6 +77,7 @@ class ModelFactory
             types
         for type in *protoypes
             if type.test path
+                counter += 1
                 nodes[uri] = type self, path, uri
                 return nodes[uri]
 
@@ -119,3 +123,18 @@ class ModelFactory
     seriesset: ( node ) =>
         uri = find_set node.uri, '-'
         return @load uri if uri
+
+    --- 重置节点实例计数器
+    -- @function reset
+    -- @return ModelFactory
+    -- @usage factory:reset()
+    reset: =>
+        counter = 0
+        @
+
+    --- 获取节点实例计数
+    -- @function stats
+    -- @return int
+    -- @usage count = factory:stats()
+    stats: =>
+        counter

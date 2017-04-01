@@ -1,4 +1,4 @@
-lap = os.clock
+lap = os.clock!
 
 with ngx
     if not .var.luadex

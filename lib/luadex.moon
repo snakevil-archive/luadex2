@@ -11,15 +11,18 @@ ViewFactory = require 'view/factory'
 -- @param {path=string, uri=string} request
 -- @return string
 luadex = ( request ) ->
-    { :path, :uri } = request
+    { :path, :uri, :lap } = request
 
     path ..= '/' if '/' != path\sub(-1)
     uri = uri\gsub '%%(%x%x)', (hex) ->
         string.char tonumber hex, 16
     uri ..= '/' if '/' != uri\sub(-1)
 
-    node_factory = ModelFactory path, uri
+    node_factory = ModelFactory(path, uri)\reset!
     page = ViewFactory!\analyse node_factory\load uri
-    page\render!\gsub('>%s+', '>')\gsub '%s+<', '<'
+    html = page\render!\gsub('>%s+', '>')\gsub '%s+<', '<'
+    html\gsub '%%PROFILER%%',
+        '<mark>%d</mark> nodes in <mark>%.2f</mark> ms'\format node_factory\stats!,
+            1000 * (os.clock! - lap)
 
 luadex
