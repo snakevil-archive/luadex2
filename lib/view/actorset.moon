@@ -8,6 +8,10 @@ ViewNode = require 'view/node'
 -- @license GPL-3.0+
 -- @class ViewActorSet
 class ViewActorSet extends ViewNode
+    --- 是否使用瀑布流式列表布局
+    -- @field
+    masonry: true
+
     --- 定制 CSS 块代码
     -- @function css
     -- @return string

@@ -154,10 +154,11 @@ $if{ 0 < #$snaps }[[
             seriesset: @node\seriesset!
             yield_meta: ->
                 for tag, value in pairs @node.meta
-                    if 'actors' != tag and 'series' != tag and 'links' != tag
-                        cosmo.yield
-                            tag: tag\sub(1, 1)\upper! .. tag\sub(2)
-                            :value
+                    continue if 'title' == tag or 'actors' == tag or 'series' == tag or 'links' == tag
+                    value = os.date '%F', value if 'date' == tag
+                    cosmo.yield
+                        tag: tag\sub(1, 1)\upper! .. tag\sub(2)
+                        :value
             yield_links: ->
                 for title, url in pairs @node.meta.links
                     cosmo.yield :title, :url
