@@ -21,7 +21,7 @@ for line in yaml\lines!
         info[category] = {}
 yaml\close!
 
-yaml = io.open 'minfo.yml', 'w'
+yaml = io.open 'minfo.yml', 'w+'
 if not yaml
     io.stderr\write [=[
 error: 'minfo.yml' write denied.

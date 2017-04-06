@@ -1,0 +1,41 @@
+require 'lfs'
+lyaml = require 'lyaml'
+
+update = ( table, path, value, depth = 1 ) ->
+    node = path[depth]
+    table[node] = if depth == #path
+        value
+    else
+        update table[node] or {}, path, value, 1 + depth
+    count = 0
+    for key, value in pairs table
+        count += 1 if value
+    table if 0 != count
+
+os.exit 1 if 1 > #arg
+
+meta = {}
+
+if 'file' == lfs.attributes 'metag.yml', 'mode'
+    yaml = io.open 'metag.yml'
+    meta = lyaml.load yaml\read '*a'
+    yaml\close!
+
+value = if 1 < #arg
+    arg[2]
+
+parts = for part in arg[1]\gmatch '[^%.]+'
+    part
+
+meta = update meta, parts, value
+
+yaml = io.open 'metag.yml', 'w+'
+if not yaml
+    io.stderr\write [=[
+error: 'metag.yml' write denied.
+]=]
+    os.exit 2
+yaml\write lyaml.dump {
+    meta
+}
+yaml\close!
