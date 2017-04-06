@@ -24,7 +24,7 @@ class ModelMovie extends ModelNode
     -- @usage info = get_info'/video'
     get_info = ( path ) ->
         path ..= '/' if '/' != path\sub -1
-        cache = path .. '.info.yml'
+        cache = path .. 'minfo.yml'
         info = {
             video: {
                 width: '720 pixels'

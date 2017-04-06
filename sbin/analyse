@@ -1,22 +1,13 @@
 require 'lfs'
 lyaml = require 'lyaml'
 
-if 1 > #arg
-    io.stderr\write [=[
-Usage:
-  analyse <movie.mp4>
-]=]
-    os.exit 1
-
-dir = arg[1]\gsub 'movie.mp4', ''
-
-if dir == arg[1] or 'file' != lfs.attributes arg[1], 'mode'
+if 'file' != lfs.attributes 'movie.mp4', 'mode'
     io.stderr\write [=[
 error: 'movie.mp4' required.
 ]=]
-    os.exit 2
+    os.exit 1
 
-yaml = io.popen "mediainfo '#{arg[1]}'"
+yaml = io.popen "mediainfo 'movie.mp4'"
 info = {}
 category = ''
 for line in yaml\lines!
@@ -30,7 +21,12 @@ for line in yaml\lines!
         info[category] = {}
 yaml\close!
 
-yaml = io.open dir .. '.info.yml', 'w'
+yaml = io.open 'minfo.yml', 'w'
+if not yaml
+    io.stderr\write [=[
+error: 'minfo.yml' write denied.
+]=]
+    os.exit 2
 yaml\write lyaml.dump {
     info
 }
