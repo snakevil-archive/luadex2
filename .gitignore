@@ -2,6 +2,7 @@
 !.gitignore
 
 !lib/
+!sbin/
 !var/
 !nginx.moon
 !Makefile

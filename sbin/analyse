@@ -1,0 +1,37 @@
+require 'lfs'
+lyaml = require 'lyaml'
+
+if 1 > #arg
+    io.stderr\write [=[
+Usage:
+  analyse <movie.mp4>
+]=]
+    os.exit 1
+
+dir = arg[1]\gsub 'movie.mp4', ''
+
+if dir == arg[1] or 'file' != lfs.attributes arg[1], 'mode'
+    io.stderr\write [=[
+error: 'movie.mp4' required.
+]=]
+    os.exit 2
+
+yaml = io.popen "mediainfo '#{arg[1]}'"
+info = {}
+category = ''
+for line in yaml\lines!
+    continue if '' == line
+    pos = line\find ' : '
+    if pos
+        field = line\lower!\sub(1, pos)\gsub('[^a-z]+', '_')\gsub '_+$', ''
+        info[category][field] = line\sub 3 + pos
+    else
+        category = line\lower!
+        info[category] = {}
+yaml\close!
+
+yaml = io.open dir .. '.info.yml', 'w'
+yaml\write lyaml.dump {
+    info
+}
+yaml\close!

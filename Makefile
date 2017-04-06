@@ -11,10 +11,16 @@ LUA := $(patsubst %.moon, \
 
 .PHONY: all clean
 
-all: $(LUA)
+all: $(LUA) var/build/sbin/analyse
+
+var/build/sbin/analyse: sbin/analyse
+	moonc -o $@ $^ > /dev/null 2>&1
+	sed -e '1i #!/usr/bin/env luajit' -i'' $@
+	chmod +x $@
 
 $(LUA): $$(patsubst $(DEST)/%.lua, %.moon, $$@)
-	moonc -o $@ $^
+	mkdir -p $(dir $@)
+	moonc -p $^ | luajit -b - - > $@
 
 clean:
 	$(RM) -r $(DEST)/*
