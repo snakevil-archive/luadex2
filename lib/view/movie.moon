@@ -40,25 +40,23 @@ class ViewMovie extends ViewNode
         cosmo.fill [=[
 <div class="row">
   <div class="col-xs-12 col-md-8 col-md-offset-2">
-    <video class="video-js" controls preload="auto" poster="cover.jpg" width="$width" height="$height" data-setup='{"aspectRatio": "$ratio"}' style="margin:0 auto">
+    <video class="video-js" controls preload="auto" poster="cover.jpg" width="$info|width" height="$info|height" data-setup='{"aspectRatio": "$info|display_aspect_ratio"}' style="margin:0 auto">
       <source src="movie.mp4">
     </video>
     <h2>
-      $title
-      $if{ $height > 719 }[[
-        <span class="label label-success">HD</span>
+      $if{ $info|height > 719 }[[
+        <span class="label label-success pull-right">HD</span>
       ]][[
-        <span class="label label-warning">SD</span>
+        <span class="label label-warning pull-right">SD</span>
       ]]
+      $title
     </h2>
   </div>
 </div>
 ]=],
             if: cosmo.cif
             title: @node.name
-            width: 720
-            height: 404
-            ratio: '16:9'
+            info: @node.info.video
 
     --- 定制页面内容块代码
     -- @function body
@@ -121,7 +119,33 @@ class ViewMovie extends ViewNode
       ]]
     </dl>
   </div>
-  <div class="panel-footer text-right text-danger">
+  <div class="panel-footer text-right">
+    $if{ $node|info|general }[[
+      <span class="label label-warning">
+        $node|info|general|overall_bit_rate Kbps
+      </span>
+      &nbsp;
+      <span class="label label-warning">
+        <abbr title="$node|info|video|width:$node|info|video|height">
+          $node|info|video|display_aspect_ratio
+        </abbr>
+      </span>
+      &nbsp;
+      <span class="label label-warning">
+        <abbr title="$node|info|video|format_info">$node|info|video|format</abbr>
+        &nbsp;$node|info|video|format_profile
+      </span>
+      &nbsp;
+      <span class="label label-warning">
+        <abbr title="$node|info|audio|format_info">$node|info|audio|format</abbr>
+        &nbsp;$node|info|audio|format_profile
+      </span>
+    ]][[
+      <span class="text-danger">
+        <code>.info.yml</code>
+        is missing!
+      </span>
+    ]]
   </div>
 </div>
 $if{ 0 < #$snaps }[[

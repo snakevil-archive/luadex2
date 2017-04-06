@@ -46,7 +46,7 @@ class ViewNode
     -- @return string
     -- @usage html = view:head()
     head: =>
-        "<h1>#{@node.name}</h1>"
+        "<h1 class=\"text-uppercase\">#{@node.name}</h1>"
 
     --- 定制页面内容块代码
     -- @function body
@@ -125,7 +125,7 @@ class ViewNode
       <div class="row">
         <div class="col-xs-12 col-sm-8 col-sm-offset-4">
           <address>
-            <em class="small">PROFILER: %PROFILER%</em>
+            <em class="small text-muted">PROFILER: %PROFILER%</em>
           </address>
           <address>
             <strong>
