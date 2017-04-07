@@ -1,6 +1,7 @@
 *
 !.gitignore
 
+!etc/
 !lib/
 !sbin/
 !var/

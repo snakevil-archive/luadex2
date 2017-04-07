@@ -1,0 +1,16 @@
+set $luadex /var/www/%DOMAIN%/_luadex.git;
+set $luadex_prefix /%PREFIX%/;
+
+location ~ ^/%PREFIX%/.*\.mp4 {
+}
+
+location /%PREFIX%/!/ {
+    alias $luadex/share/static/;
+}
+
+location /%PREFIX%/ {
+    if (-d $request_filename) {
+        add_header Content-Type text/html;
+        content_by_lua_file $luadex/nginx.lua;
+    }
+}
