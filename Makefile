@@ -2,9 +2,9 @@ DOMAIN := szen.in
 PREFIX := v
 DESTDIR := var/build
 
-.PHONY: all lua nginx clean
+.PHONY: all lua nginx css clean
 
-all: lua nginx
+all: lua nginx css
 
 LUA := $(patsubst %.moon, \
 	$(DESTDIR)/%.lua, \
@@ -24,7 +24,7 @@ BIN := $(patsubst %, \
 lua: $(LUA) $(BIN)
 
 $(LUA): $(DESTDIR)/%.lua: %.moon
-	mkdir -p $(dir $@)
+	mkdir -p $(@D)
 	moonc -p $^ | luajit -b - - > $@
 
 $(BIN): $(DESTDIR)/%: %
@@ -35,8 +35,13 @@ $(BIN): $(DESTDIR)/%: %
 nginx: var/build/etc/nginx/sites-available/$(DOMAIN).d/luadex.sub
 
 var/build/etc/nginx/sites-available/$(DOMAIN).d/luadex.sub: etc/nginx/sites-available/domain.d/luadex.sub
-	mkdir -p $(dir $@)
+	mkdir -p $(@D)
 	sed -e 's#%PREFIX%#$(PREFIX)#;s#%DOMAIN%#$(DOMAIN)#' $< > $@
+
+css: var/build/share/static/luadex.css
+
+var/build/share/static/luadex.css: share/scss/luadex.scss $(wildcard share/scss/_*.scss)
+	node_modules/.bin/node-sass -o $(@D) --output-style compressed --linefeed lf --source-map $@.map $<
 
 clean:
 	$(RM) -r $(DESTDIR)/*

@@ -1,0 +1,22 @@
+{
+  "name": "luadex",
+  "version": "0.1.0",
+  "description": "本配置仅用于管理构建所需的前端工具。",
+  "dependencies": {},
+  "devDependencies": {
+    "node-sass": "^4.5.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/snakevil/luadex.git"
+  },
+  "author": "Snakevil Zen <zsnakevil@gmail.com>",
+  "license": "GPL-3.0+",
+  "bugs": {
+    "url": "https://github.com/snakevil/luadex/issues"
+  },
+  "homepage": "https://github.com/snakevil/luadex#readme"
+}

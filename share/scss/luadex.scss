@@ -1,0 +1,39 @@
+.page ._footer {
+    margin-bottom: 0;
+}
+
+.masonry ._list ._item {
+    margin-bottom: 15px;
+}
+
+.page.actor {
+    .media-object {
+        max-width: 128px;
+    }
+}
+
+.page.actorset {
+    .thumbnail img {
+        width: 100%;
+    }
+}
+
+.page.movie {
+    .video-js {
+        margin: 0 auto;
+    }
+}
+
+.page.movieset,
+.page.actor,
+.page.series {
+    .thumbnail {
+      background-position: right;
+      background-size: auto 100%;
+
+      img {
+          visibility: hidden;
+          margin-top: 80%;
+        }
+    }
+}

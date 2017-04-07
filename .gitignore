@@ -4,6 +4,8 @@
 !etc/
 !lib/
 !sbin/
+!share/
 !var/
 !nginx.moon
 !Makefile
+!package.json

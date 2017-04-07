@@ -12,24 +12,6 @@ class ViewMovieSet extends ViewNode
     -- @field
     masonry: true
 
-    --- 定制 CSS 块代码
-    -- @function css
-    -- @return string
-    -- @usage html = view:css()
-    css: =>
-        [=[
-<style>
-.thumbnail {
-  background-position: right;
-  background-size: auto 100%;
-}
-.thumbnail img {
-  visibility: hidden;
-  margin-top: 80%;
-}
-</style>
-]=]\gsub('\n%s*', '')\gsub('([:,])%s+', '%1')\gsub '%s*%{', '{'
-
     --- 定制页面内容块代码
     -- @function body
     -- @int[opt] birthday
@@ -45,9 +27,9 @@ $cond_movies[[
         <span class="small">$age</span>
       ]]
     </h2>
-    <div class="row masonry">
+    <div class="row _list">
       $movies[[
-        <div class="col-xs-6 col-sm-4 col-lg-3 item">
+        <div class="col-xs-6 col-sm-4 col-lg-3 _item">
           <a class="thumbnail" href="$uri" style="background-image:url($uri./cover.jpg)">
             <img src="$uri./cover.jpg">
           </a>

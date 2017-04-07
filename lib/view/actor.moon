@@ -8,13 +8,6 @@ ViewMovieSet = require 'view/movieset'
 -- @license GPL-3.0+
 -- @class ViewActor
 class ViewActor extends ViewMovieSet
-    --- 定制 CSS 块代码
-    -- @function css
-    -- @return string
-    -- @usage html = view:css()
-    css: =>
-        super!\gsub '<style>', '<style>.media-object{max-width:128px}'
-
     --- 定制页面头部块代码
     -- @function head
     -- @return string

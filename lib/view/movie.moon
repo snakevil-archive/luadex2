@@ -40,7 +40,7 @@ class ViewMovie extends ViewNode
         cosmo.fill [=[
 <div class="row">
   <div class="col-xs-12 col-md-8 col-md-offset-2">
-    <video class="video-js" controls preload="auto" poster="cover.jpg" width="$info|width" height="$info|height" data-setup='{"aspectRatio": "$info|display_aspect_ratio"}' style="margin:0 auto">
+    <video class="video-js" controls preload="auto" poster="cover.jpg" width="$info|width" height="$info|height" data-setup='{"aspectRatio": "$info|display_aspect_ratio"}'>
       <source src="movie.mp4">
     </video>
     <h2>
@@ -149,9 +149,9 @@ class ViewMovie extends ViewNode
   </div>
 </div>
 $if{ 0 < #$snaps }[[
-  <div class="row masonry">
+  <div class="row _list">
     $snaps[[
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 item">
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 _item">
         <a href="$node|uri$it" data-fancybox="snaps">
           <img class="img-responsive img-thumbnail" src="$node|uri$it">
         </a>

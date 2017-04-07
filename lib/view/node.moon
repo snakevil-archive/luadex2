@@ -105,8 +105,8 @@ class ViewNode
   <title>$title - Luadex</title>
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
   <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-  <link href="$options|prefix!/luadex.min.css" rel="stylesheet">
   $css
+  <link href="$options|prefix!/luadex.css" rel="stylesheet">
 </head>
 <body>
   <div class="jumbotron">
@@ -122,7 +122,7 @@ class ViewNode
   <div class="container">
     $body
   </div>
-  <div class="jumbotron" style="margin-bottom:0">
+  <div class="jumbotron _footer">
     <div class="container">
       <div class="row">
         <div class="col-xs-12 col-sm-8 col-sm-offset-4">
@@ -168,7 +168,7 @@ class ViewNode
   </div>
   <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
   <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="$options|prefix!/luadex.min.js"></script>
+  <script src="$options|prefix!/luadex.js"></script>
   $js
 </body>
 </html>
@@ -178,10 +178,7 @@ class ViewNode
                 ' masonry'
             :options
             title: @title!
-            css: @css! .. if @masonry
-                '<style>.masonry .item{margin-bottom:15px}</style>'
-            else
-                ''
+            css: @css!
             js: @js! .. if @masonry
                 [=[
 <script src="//cdn.bootcss.com/masonry/4.1.1/masonry.pkgd.min.js"></script>

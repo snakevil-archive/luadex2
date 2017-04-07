@@ -12,13 +12,6 @@ class ViewActorSet extends ViewNode
     -- @field
     masonry: true
 
-    --- 定制 CSS 块代码
-    -- @function css
-    -- @return string
-    -- @usage html = view:css()
-    css: =>
-        '<style>.thumbnail img{width:100%}</style>'
-
     --- 定制页面内容块代码
     -- @function body
     -- @return string
@@ -26,9 +19,9 @@ class ViewActorSet extends ViewNode
     body: =>
         cosmo.fill [=[
 $cond_actors[[
-  <div class="row masonry">
+  <div class="row _list">
     $yield_actors[[
-      <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 item">
+      <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 _item">
         <a class="thumbnail" href="$uri">
           <img src="$uri./portrait.jpg">
           <div class="caption">
