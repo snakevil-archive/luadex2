@@ -19,17 +19,15 @@ class ViewActorSet extends ViewNode
     body: =>
         cosmo.fill [=[
 $cond_actors[[
-  <div class="row _list">
+  <div class="row -list">
     $yield_actors[[
-      <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 _item">
+      <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 -item">
         <a class="thumbnail" href="$uri">
           <img src="$uri./portrait.jpg">
           <div class="caption">
             <h2 class="h4">
               <span>$name</span>
-              $if{ $age }[[
-                <span class="small">$age</span>
-              ]]
+              <span class="label label-info pull-right">$movies</span>
             </h2>
           </div>
         </a>
@@ -44,12 +42,16 @@ $cond_actors[[
                 cosmo.cond 0 < #actors,
                     yield_actors: ->
                         names = {}
+                        uniqs = {}
                         for actor in *actors
                             continue if names[actor.name]
                             names[actor.name] = true
-                            age = actor\age!
+                            table.insert uniqs, actor
+                        for one = 1, #uniqs
+                            another = #uniqs - math.random #uniqs + 1 - one
+                            uniqs[one], uniqs[another] = uniqs[another], uniqs[one]
+                        for actor in *uniqs
                             cosmo.yield
                                 name: actor.name
                                 uri: actor.uri
-                                age: if age
-                                    "/#{age}y"
+                                movies: #actor\children!

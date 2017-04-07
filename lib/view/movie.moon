@@ -149,9 +149,9 @@ class ViewMovie extends ViewNode
   </div>
 </div>
 $if{ 0 < #$snaps }[[
-  <div class="row _list">
+  <div class="row -list">
     $snaps[[
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 _item">
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 -item">
         <a href="$node|uri$it" data-fancybox="snaps">
           <img class="img-responsive img-thumbnail" src="$node|uri$it">
         </a>
@@ -189,8 +189,7 @@ $if{ 0 < #$snaps }[[
             snaps: do
                 snaps = [ i for i in *@node\assets! ]
                 if 0 < #snaps
-                    math.randomseed os.time!
                     for one = 1, #snaps
-                        another = math.random #snaps + 1 - one
+                        another = #snaps - math.random #snaps + 1 - one
                         snaps[one], snaps[another] = snaps[another], snaps[one]
                 snaps

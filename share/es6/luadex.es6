@@ -16,5 +16,6 @@ if ($html.hasClass('masonry')) {
                 ? masonry()
                 : $(this).on('load', masonry);
         });
-    })('.masonry ._list', '._item');
+    })('.masonry .-list', '.-item');
 }
+$('.-tooltip').tooltip();

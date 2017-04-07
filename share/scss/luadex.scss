@@ -1,3 +1,5 @@
+@import 'mixins';
+
 .page ._footer {
     margin-bottom: 0;
 }
@@ -7,8 +9,11 @@
 }
 
 .page.actor {
+    .media-left {
+        width: 40%;
+    }
     .media-object {
-        max-width: 128px;
+        width: 100%;
     }
 }
 
@@ -28,12 +33,20 @@
 .page.actor,
 .page.series {
     .thumbnail {
-      background-position: right;
-      background-size: auto 100%;
+        background-position: 99% 0;
+        background-size: auto 100%;
+        background-repeat: no-repeat;
 
-      img {
-          visibility: hidden;
-          margin-top: 80%;
+        &:hover {
+            background-position: 88% 24%;
+            background-size: auto 120%;
+        }
+
+        @include transition2(background-position 1s, background-size 1s);
+
+        img {
+            visibility: hidden;
+            margin-top: 80%;
         }
     }
 }

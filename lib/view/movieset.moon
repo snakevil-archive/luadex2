@@ -22,14 +22,15 @@ class ViewMovieSet extends ViewNode
 $cond_movies[[
   $yield_years[[
     <h2>
+      <span class="label label-info pull-right">$size</span>
       $year
       $if{ $age }[[
         <span class="small">$age</span>
       ]]
     </h2>
-    <div class="row _list">
+    <div class="row -list">
       $movies[[
-        <div class="col-xs-6 col-sm-4 col-lg-3 _item">
+        <div class="col-xs-6 col-sm-4 col-lg-3 -item">
           <a class="thumbnail" href="$uri" style="background-image:url($uri./cover.jpg)">
             <img src="$uri./cover.jpg">
           </a>
@@ -62,3 +63,4 @@ $cond_movies[[
                                 age: if born
                                     '/' .. (year - born) .. 'y'
                                 movies: ymovies[year]
+                                size: #ymovies[year]

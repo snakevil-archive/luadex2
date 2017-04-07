@@ -26,12 +26,19 @@ class ViewActor extends ViewMovieSet
       </div>
       <div class="media-body">
         <h1 class="media-heading">$name</h1>
-        <p>
-          $node|meta|romaji
-          $if{ $age }[[
-            <br>$age
-          ]]
-        </p>
+        <p class="text-uppercase">$node|meta|romaji</p>
+        $if{ $age }[[
+          <p>$age</p>
+        ]]
+        $if{ $node|meta|size }[[
+          <p>
+            <abbr class="-tooltip" title="Bust" data-placement="bottom">$node|meta|size|B</abbr>
+            /
+            <abbr class="-tooltip" title="Waist" data-placement="bottom">$node|meta|size|W</abbr>
+            /
+            <abbr class="-tooltip" title="Hip" data-placement="bottom">$node|meta|size|H</abbr>
+          </p>
+        ]]
       </div>
     </div>
   </div>
@@ -64,23 +71,6 @@ class ViewActor extends ViewMovieSet
   <div class="panel-body">
     <dl class="dl-horizontal">
       $if{ $node|meta|size }[[
-        <dt>Size</dt>
-        <dd>
-          <ul class="list-unstyled">
-            <li>
-              <abbr title="Bust">B</abbr>
-              &nbsp;$node|meta|size|B cm
-            </li>
-            <li>
-              <abbr title="Waist">W</abbr>
-              &nbsp;$node|meta|size|W cm
-            </li>
-            </li>
-              <abbr title="Hip">H</abbr>
-              &nbsp;$node|meta|size|H cm
-            </li>
-          </ul>
-        </dd>
         <dt>Tall</dt>
         <dd>
           <p>$node|meta|size|T cm</p>
