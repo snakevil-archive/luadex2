@@ -1,5 +1,4 @@
 *
 !.gitignore
 
-!es6/
-!scss/
+!luadex.es6

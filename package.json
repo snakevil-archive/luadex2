@@ -4,7 +4,11 @@
   "description": "本配置仅用于管理构建所需的前端工具。",
   "dependencies": {},
   "devDependencies": {
-    "node-sass": "^4.5.2"
+    "babel-cli": "^6.24.0",
+    "babel-preset-env": "^1.3.2",
+    "babel-preset-es2015": "^6.24.0",
+    "node-sass": "^4.5.2",
+    "uglify-js": "^2.8.21"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,5 +22,11 @@
   "bugs": {
     "url": "https://github.com/snakevil/luadex/issues"
   },
-  "homepage": "https://github.com/snakevil/luadex#readme"
+  "homepage": "https://github.com/snakevil/luadex#readme",
+  "babel": {
+    "presets": [
+      "env",
+      "es2015"
+    ]
+  }
 }

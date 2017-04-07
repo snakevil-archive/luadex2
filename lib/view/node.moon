@@ -168,8 +168,8 @@ class ViewNode
   </div>
   <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
   <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="$options|prefix!/luadex.js"></script>
   $js
+  <script src="$options|prefix!/luadex.js"></script>
 </body>
 </html>
 ]=],
@@ -182,25 +182,7 @@ class ViewNode
             js: @js! .. if @masonry
                 [=[
 <script src="//cdn.bootcss.com/masonry/4.1.1/masonry.pkgd.min.js"></script>
-<script>
-(function(m,n,i,j,k){
-  i=$(m+' '+n+' img'),
-  j=0,
-  k=function(){
-    if(i.length==++j)
-      $(m).masonry({
-        itemSelector:n
-      });
-  };
-  i.each(function(_){
-    _=this;
-    _.complete
-      ?k()
-      :_.onload=k;
-  });
-})('.masonry','.item');
-</script>
-]=]\gsub '\n%s*', ''
+]=]
             else
                 ''
             head: @head!

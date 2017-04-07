@@ -2,9 +2,9 @@ DOMAIN := szen.in
 PREFIX := v
 DESTDIR := var/build
 
-.PHONY: all lua nginx css clean
+.PHONY: all lua nginx css js clean
 
-all: lua nginx css
+all: lua nginx css js
 
 LUA := $(patsubst %.moon, \
 	$(DESTDIR)/%.lua, \
@@ -42,6 +42,15 @@ css: var/build/share/static/luadex.css
 
 var/build/share/static/luadex.css: share/scss/luadex.scss $(wildcard share/scss/_*.scss)
 	node_modules/.bin/node-sass -o $(@D) --output-style compressed --linefeed lf --source-map $@.map $<
+
+js: var/build/share/static/luadex.js
+
+var/build/share/static/luadex.js: share/es6/luadex.es6
+	mkdir -p $(@D)
+	node_modules/.bin/babel -s true -o $@.tmp $<
+	node_modules/.bin/uglifyjs --source-map $(@F).map -mco $@ --in-source-map $@.tmp.map $@.tmp
+	mv $(@F).map $@.map
+	$(RM) $@.tmp*
 
 clean:
 	$(RM) -r $(DESTDIR)/*
