@@ -3,10 +3,12 @@ lyaml = require 'lyaml'
 
 update = ( table, path, value, depth = 1 ) ->
     node = path[depth]
-    table[node] = if depth == #path
-        value
+    if depth != #path
+        table[node] = update table[node] or {}, path, value, 1 + depth
+    elseif '@' == node
+        table[1 + #table] = value
     else
-        update table[node] or {}, path, value, 1 + depth
+        table[node] = value
     count = 0
     for key, value in pairs table
         count += 1 if value
@@ -22,7 +24,7 @@ if 'file' == lfs.attributes 'metag.yml', 'mode'
     yaml\close!
 
 value = if 1 < #arg
-    arg[2]
+    table.concat arg, ' ', 2
 
 parts = for part in arg[1]\gmatch '[^%.]+'
     part
