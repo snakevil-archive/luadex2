@@ -142,7 +142,7 @@ class ViewMovie extends ViewNode
       </span>
     ]][[
       <span class="text-danger">
-        <code>.info.yml</code>
+        <code>minfo.yml</code>
         is missing!
       </span>
     ]]

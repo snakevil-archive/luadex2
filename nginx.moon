@@ -10,8 +10,9 @@ with ngx
     package.path = path .. package.path if package.path\sub(1, #path) != path
 
     succeed, content = pcall require'luadex',
-        path: .var.request_filename,
-        uri: .var.request_uri,
+        path: .var.request_filename
+        uri: .var.request_uri
+        prefix: .var.luadex_prefix
         :lap
 
     if succeed

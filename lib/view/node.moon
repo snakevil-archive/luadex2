@@ -92,18 +92,20 @@ class ViewNode
 
     --- 渲染
     -- @function render
+    -- @table options
     -- @return string
     -- @usage html = view:render()
-    render: =>
+    render: ( options ) =>
         cosmo.fill [=[
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js $kind$masonry" lang="en">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>$title - Luadex</title>
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
   <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link href="$options|prefix!/luadex.min.css" rel="stylesheet">
   $css
 </head>
 <body>
@@ -166,10 +168,15 @@ class ViewNode
   </div>
   <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
   <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="$options|prefix!/luadex.min.js"></script>
   $js
 </body>
 </html>
 ]=],
+            kind: @@__name\lower!\gsub '^view', 'page '
+            masonry: if @masonry
+                ' masonry'
+            :options
             title: @title!
             css: @css! .. if @masonry
                 '<style>.masonry .item{margin-bottom:15px}</style>'
