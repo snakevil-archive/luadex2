@@ -1,11 +1,7 @@
 @import 'mixins';
 
-.page ._footer {
+.page .-footer {
     margin-bottom: 0;
-}
-
-.masonry ._list ._item {
-    margin-bottom: 15px;
 }
 
 .page.actor {
@@ -20,12 +16,6 @@
 .page.actorset {
     .thumbnail img {
         width: 100%;
-    }
-}
-
-.page.movie {
-    .video-js {
-        margin: 0 auto;
     }
 }
 

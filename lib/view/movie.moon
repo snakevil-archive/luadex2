@@ -18,7 +18,7 @@ class ViewMovie extends ViewNode
     -- @usage html = view:css()
     css: =>
         [=[
-<link href="//cdn.bootcss.com/video.js/5.19.0/video-js.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/video.js/5.19.1/video-js.min.css" rel="stylesheet">
 <link href="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.css" rel="stylesheet">
 ]=]
 
@@ -28,7 +28,7 @@ class ViewMovie extends ViewNode
     -- @usage html = view:js()
     js: =>
         [=[
-<script src="//cdn.bootcss.com/video.js/5.19.0/video.min.js"></script>
+<script src="//cdn.bootcss.com/video.js/5.19.1/video.min.js"></script>
 <script src="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.js"></script>
 ]=]
 
@@ -40,14 +40,14 @@ class ViewMovie extends ViewNode
         cosmo.fill [=[
 <div class="row">
   <div class="col-xs-12 col-md-8 col-md-offset-2">
-    <video class="video-js" controls preload="auto" poster="cover.jpg" width="$info|width" height="$info|height" data-setup='{"aspectRatio": "$info|display_aspect_ratio"}'>
+    <video class="video-js vjs-fluid" controls preload="none" poster="cover.jpg" width="$info|width" height="$info|height" data-setup='{"aspectRatio": "$info|display_aspect_ratio"}'>
       <source src="movie.mp4">
     </video>
     <h2>
       $if{ $info|height > 719 }[[
-        <span class="label label-success pull-right">HD</span>
+        <span class="label label-success pull-right -tooltip" title="$info|width*$info|height" data-placement="left">HD</span>
       ]][[
-        <span class="label label-warning pull-right">SD</span>
+        <span class="label label-warning pull-right -tooltip" title="$info|width*$info|height" data-placement="left">SD</span>
       ]]
       $title
     </h2>
@@ -126,7 +126,7 @@ class ViewMovie extends ViewNode
       </span>
       &nbsp;
       <span class="label label-warning">
-        <abbr title="$node|info|video|width:$node|info|video|height">
+        <abbr class="-tooltip" title="$node|info|video|width*$node|info|video|height">
           $node|info|video|display_aspect_ratio
         </abbr>
       </span>
@@ -149,15 +149,15 @@ class ViewMovie extends ViewNode
   </div>
 </div>
 $if{ 0 < #$snaps }[[
-  <div class="row -list">
+  <ul class="list-unstyled row -list">
     $snaps[[
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 -item">
-        <a href="$node|uri$it" data-fancybox="snaps">
-          <img class="img-responsive img-thumbnail" src="$node|uri$it">
+      <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3 -item">
+        <a class="thumbnail" href="$node|uri$it" data-fancybox="snaps">
+          <img src="$node|uri$it">
         </a>
-      </div>
+      </li>
     ]]
-  </div>
+  </ul>
 ]]
 ]=],
             if: cosmo.cif

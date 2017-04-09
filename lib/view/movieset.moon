@@ -28,15 +28,15 @@ $cond_movies[[
         <span class="small">$age</span>
       ]]
     </h2>
-    <div class="row -list">
+    <ul class="list-unstyled row -list">
       $movies[[
-        <div class="col-xs-6 col-sm-4 col-lg-3 -item">
+        <li class="col-xs-6 col-sm-4 col-lg-3 -item">
           <a class="thumbnail" href="$uri" style="background-image:url($uri./cover.jpg)">
             <img src="$uri./cover.jpg">
           </a>
-        </div>
+        </li>
       ]]
-    </div>
+    </ul>
   ]]
 ]]
 ]=],
