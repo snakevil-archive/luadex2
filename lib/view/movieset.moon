@@ -43,6 +43,10 @@ $cond_movies[[
             if: cosmo.cif
             cond_movies: do
                 movies = @node\children!
+                table.sort movies, (one, another) ->
+                    one_time = os.date '%s', one.meta.date
+                    another_time = os.date '%s', another.meta.date
+                    one_time > another_time
                 cosmo.cond 0 < #movies,
                     yield_years: ->
                         years = {}
@@ -55,8 +59,6 @@ $cond_movies[[
                                 table.insert years, year
                                 ymovies[year] = {}
                             table.insert ymovies[year], movie
-                        table.sort years, (one, another) ->
-                            one > another
                         for year in *years
                             cosmo.yield
                                 :year

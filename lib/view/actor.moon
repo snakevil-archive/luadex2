@@ -19,7 +19,7 @@ class ViewActor extends ViewMovieSet
             @node.name
         cosmo.fill [=[
 <div class="row">
-  <div class="col-xs-12 col-md-6 col-md-offset-3">
+  <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
     <div class="media">
       <div class="media-left">
         <img class="media-object img-rounded" src="$node|uri./portrait.jpg">
