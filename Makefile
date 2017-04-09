@@ -32,20 +32,24 @@ $(BIN): $(DESTDIR)/%: %
 	sed -e '1i #!/usr/bin/env luajit' -i'' $@
 	chmod +x $@
 
-nginx: var/build/etc/nginx/sites-available/$(DOMAIN).d/luadex.sub
+nginx: $(DESTDIR)/etc/nginx/conf.d/luadex.conf $(DESTDIR)/etc/nginx/sites-available/$(DOMAIN).d/luadex.sub
 
-var/build/etc/nginx/sites-available/$(DOMAIN).d/luadex.sub: etc/nginx/sites-available/domain.d/luadex.sub
+$(DESTDIR)/etc/nginx/conf.d/luadex.conf: etc/nginx/conf.d/luadex.conf
+	mkdir -p $(@D)
+	cp -f $< $@
+
+$(DESTDIR)/etc/nginx/sites-available/$(DOMAIN).d/luadex.sub: etc/nginx/sites-available/domain.d/luadex.sub
 	mkdir -p $(@D)
 	sed -e 's#%PREFIX%#$(PREFIX)#;s#%DOMAIN%#$(DOMAIN)#' $< > $@
 
-css: var/build/share/static/luadex.css
+css: $(DESTDIR)/share/static/luadex.css
 
-var/build/share/static/luadex.css: share/scss/luadex.scss $(wildcard share/scss/_*.scss)
+$(DESTDIR)/share/static/luadex.css: share/scss/luadex.scss $(wildcard share/scss/_*.scss)
 	node_modules/.bin/node-sass -o $(@D) --output-style compressed --linefeed lf --source-map $@.map $<
 
-js: var/build/share/static/luadex.js
+js: $(DESTDIR)/share/static/luadex.js
 
-var/build/share/static/luadex.js: share/es6/luadex.es6
+$(DESTDIR)/share/static/luadex.js: share/es6/luadex.es6
 	mkdir -p $(@D)
 	node_modules/.bin/babel -s true -o $@.tmp $<
 	node_modules/.bin/uglifyjs --source-map $(@F).map -mco $@ --in-source-map $@.tmp.map $@.tmp

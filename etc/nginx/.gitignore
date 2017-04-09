@@ -1,4 +1,5 @@
 *
 !.gitignore
 
+!conf.d/
 !sites-available/

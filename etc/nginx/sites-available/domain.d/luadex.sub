@@ -2,6 +2,10 @@ set $luadex /var/www/%DOMAIN%/_luadex.git;
 set $luadex_prefix /%PREFIX%/;
 
 location ~ ^/%PREFIX%/.*\.mp4 {
+    if ($luadex_guest) {
+        limit_rate_after 4000k;
+        limit_rate 100k;
+    }
 }
 
 location /%PREFIX%/!/ {
